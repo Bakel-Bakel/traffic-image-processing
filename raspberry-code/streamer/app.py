@@ -3,7 +3,7 @@ from ultralytics import YOLO
 import cv2
 
 app = Flask(__name__)
-model = YOLO('yolov8n.pt')  # Use nano model for speed
+model = YOLO('yolov8s.pt')  #
 
 # Initialize webcam
 camera = cv2.VideoCapture(0)
@@ -17,7 +17,7 @@ def generate_frames():
             break
         
         # Inference
-        results = model.predict(source=frame, imgsz=640, conf=0.5, verbose=False)
+        results = model.predict(source=frame, imgsz=640, conf=0.3, verbose=False)
         annotated_frame = results[0].plot()
 
         # Encode as JPEG
