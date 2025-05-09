@@ -1,5 +1,4 @@
-# Install Ultralytics library
-!pip install ultralytics
+
 
 # Import necessary libraries
 import os
@@ -21,7 +20,7 @@ sns.set(rc={'axes.facecolor': '#eae8fa'}, style='darkgrid')
 model = YOLO('yolov8n.pt')
 
 # Path to the image file
-image_path = '/image_to_be_tested/001.jpg'
+image_path = 'image_to_be_tested/001.jpg'
 
 # Perform inference on the provided image(s)
 results = model.predict(source=image_path, 
