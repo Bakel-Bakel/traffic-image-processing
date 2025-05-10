@@ -25,7 +25,23 @@ def set_light(color):
 # === Flask App ===
 app = Flask(__name__)
 model = YOLO('yolov8s.pt')  # You can replace with your custom model
-camera = cv2.VideoCapture(0)
+
+
+def find_working_camera(max_index=36):
+    for i in range(max_index):
+        cap = cv2.VideoCapture(i)
+        if cap.isOpened():
+            ret, frame = cap.read()
+            if ret:
+                print(f"✅ Using camera at index {i}")
+                cap.release()
+                return i
+        cap.release()
+    raise RuntimeError("❌ No working camera found")
+
+camera_index = find_working_camera()
+camera = cv2.VideoCapture(camera_index)
+
 
 # Shared state for traffic light
 light_state = {

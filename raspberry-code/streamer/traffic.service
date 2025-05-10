@@ -1,5 +1,5 @@
 [Unit]
-Description=Traffic Detection and Control App
+Description=YOLO Traffic Light Web App
 After=network.target
 
 [Service]
