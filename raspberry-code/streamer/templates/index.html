@@ -1,10 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Traffic Live Stream</title>
+    <title>Traffic AI System</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .light { width: 100px; height: 100px; border-radius: 50%; display: inline-block; opacity: 0.3; margin: 10px; }
+        .on { opacity: 1; }
+        #countdown, #cars { font-size: 24px; margin: 10px; }
+    </style>
 </head>
 <body>
-    <h1>YTraffic Detection and Control</h1>
-    <img src="{{ url_for('video') }}" width="720" />
+    <h1>YOLOv8 Live Vehicle Detection & Traffic Light</h1>
+    <img src="{{ url_for('video') }}" width="720" /><br>
+    
+    <div id="status">
+        <div class="light" id="red" style="background:red;"></div>
+        <div class="light" id="yellow" style="background:yellow;"></div>
+        <div class="light" id="green" style="background:green;"></div>
+        <div id="countdown">Countdown: --</div>
+        <div id="cars">Vehicles Detected: --</div>
+    </div>
+
+    <script>
+        function updateStatus() {
+            fetch('/status')
+                .then(res => res.json())
+                .then(data => {
+                    ['red', 'yellow', 'green'].forEach(c => {
+                        document.getElementById(c).classList.remove('on');
+                    });
+                    document.getElementById(data.color).classList.add('on');
+                    document.getElementById('countdown').innerText = `Countdown: ${data.countdown}s`;
+                    document.getElementById('cars').innerText = `Vehicles Detected: ${data.vehicle_count}`;
+                });
+        }
+
+        setInterval(updateStatus, 1000);
+    </script>
 </body>
 </html>
