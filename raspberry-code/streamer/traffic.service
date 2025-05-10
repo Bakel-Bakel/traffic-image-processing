@@ -1,0 +1,14 @@
+[Unit]
+Description=Traffic Detection and Control App
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python /home/tl/traffic-image-processing/raspberry-code/streamer/app.py
+WorkingDirectory=/home/tl/traffic-image-processing/raspberry-code/streamer
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=tl
+
+[Install]
+WantedBy=multi-user.target
